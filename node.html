@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuietMind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#f9f8f3] text-[#2D312E] min-h-screen flex flex-col md:flex-row antialiased">
+
+    <aside id="mobileSidebar"
+        class="fixed inset-y-0 left-0 z-40 w-72 max-w-xs h-screen transform -translate-x-full bg-[#F2EFE9] p-6 flex flex-col justify-between shrink-0 border-b border-[#E5E0D8] transition-transform duration-300 md:static md:translate-x-0 md:w-64 md:border-b-0 md:border-r overflow-y-auto">
+        <div>
+            <div class="flex items-center justify-between gap-3 mb-8">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-[#62826B] flex items-center justify-center text-white text-xs">
+                        🌱</div>
+                    <div>
+                        <h1 class="font-bold text-lg leading-tight text-[#1A1D1A]">QuietMind</h1>
+                        <p class="text-xs text-[#737A74]">Beginner's Haven</p>
+                    </div>
+                </div>
+                <button id="sidebarClose" data-sidebar-close
+                    class="rounded-full bg-[#E5E0D8] p-2 text-[#555D56] hover:bg-[#D9D3C8] md:hidden"
+                    aria-label="Close menu">✕</button>
+            </div>
+
+            <button
+                class="w-full bg-[#3D5243] hover:bg-[#2C3B30] text-white font-medium py-3 px-4 rounded-full flex items-center justify-center gap-2 transition duration-200 shadow-sm mb-8">
+                <span class="text-lg leading-none">+</span> New Note
+            </button>
+
+            <nav class="space-y-6">
+                <div>
+                    <p class="text-[11px] font-bold tracking-wider text-[#8A928C] uppercase mb-3">Library</p>
+                    <ul class="space-y-1">
+                        <li>
+                            <a href="#"
+                                class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#92A898] text-[#1A1D1A] font-medium transition">
+                                <span>📄</span> Notes
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[#555D56] hover:bg-[#E6E2DA] transition">
+                                <span>📁</span> Categories
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <p class="text-[11px] font-bold tracking-wider text-[#8A928C] uppercase mb-3">Favorites</p>
+                    <ul class="space-y-1 text-sm font-medium text-[#555D56]">
+                        <li>
+                            <a href="#"
+                                class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-[#E6E2DA] transition">
+                                <span class="w-2 h-2 rounded-full bg-[#A8B2A6]"></span> Personal
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-[#E6E2DA] transition">
+                                <span class="w-2 h-2 rounded-full bg-[#62826B]"></span> Creative Work
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div class="pt-6 border-t border-[#E5E0D8] mt-6 md:mt-0 space-y-1 text-sm font-medium text-[#555D56]">
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-[#E6E2DA] transition">
+                <span>⚙️</span> Settings
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-[#E6E2DA] transition">
+                <span>📥</span> Archive
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-[#E6E2DA] transition">
+                <span>❓</span> Help
+            </a>
+        </div>
+    </aside>
+    <div id="sidebarBackdrop"
+        class="fixed inset-0 z-30 hidden bg-black/40 opacity-0 transition-opacity duration-200 md:hidden"></div>
+
+    <main class="flex-1 p-6 md:p-10 max-w-7xl mx-auto w-full h-screen overflow-y-auto">
+
+        <header class="flex flex-col sm:flex-row sm:items-center sticky top-0 z-20 justify-between gap-4 mb-10">
+            <div class="flex items-center justify-between w-full gap-3">
+                <button id="sidebarToggle"
+                    class="inline-flex items-center gap-2 bg-white text-sm font-medium text-[#3D5243] hover:bg-[#F6F3EE] md:hidden"
+                    aria-label="Open menu" aria-expanded="false">
+                    ☰
+                </button>
+                <div class="relative w-full sm:max-w-md">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
+                    <input type="text" placeholder="Search your thoughts..."
+                        class="w-full bg-[#F1EFE9] border border-transparent focus:border-[#62826B] focus:bg-white rounded-full py-2.5 pl-11 pr-4 text-sm text-[#2D312E] placeholder-[#8A928C] outline-none transition">
+                </div>
+
+                <div class="flex items-center justify-between sm:justify-end gap-4">
+                    <button class="text-sm font-medium text-[#3D5243] hover:underline flex items-center gap-1">
+                        <span>+</span> New Note
+                    </button>
+                    <div class="w-9 h-9 rounded-full overflow-hidden bg-[#E5E0D8] border border-[#D1C9BC]">
+                        <div
+                            class="w-full h-full flex items-center justify-center">
+                            <img src="img/image.png" alt=""></div>
+                            
+                    </div>
+                </div>
+        </header>
+
+        <section class="mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-bold text-[#1A1D1A] tracking-tight mb-2">Good morning, Julian.</h2>
+                <p class="text-[#737A74]">Take a breath. What's on your mind today?</p>
+            </div>
+
+            <div class="flex items-center gap-2 p-1 self-start sm:self-auto">
+                <button class="px-4 py-1.5 rounded-xl text-xs font-medium bg-white shadow-sm text-[#1A1D1A]">
+                    📄 Recent
+                </button>
+                <button class="px-4 py-1.5 rounded-xl text-xs font-medium  bg-white shadow-sm text-[#1A1D1A]">
+                    🎛️ Layout
+                </button>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <div class="md:col-span-2 space-y-6">
+
+                <article
+                    class="bg-[#F1EFE9] rounded-3xl p-6 md:p-8 relative overflow-hidden flex flex-col justify-between min-h-[280px]">
+                    <div>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span
+                                class="bg-[#E5E0D8] text-[#555D56] text-xs font-medium px-3 py-1 rounded-full">Creative
+                                Work</span>
+                            <span class="text-xs text-[#8A928C]">• 2 hours ago</span>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-bold text-[#1A1D1A] mb-3 max-w-md leading-snug">
+                            The Philosophy of Quiet Productivity
+                        </h3>
+                        <p class="text-[#555D56] text-sm md:text-base max-w-xl leading-relaxed">
+                            In a world that never stops shouting, there is a profound power in finding silence. This
+                            morning I'm reflecting on how we can build tools that don't demand attention, but rather
+                            reward it...
+                        </p>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2 mt-6">
+                        <span
+                            class="bg-white/60 text-[#555D56] text-xs px-2.5 py-1 rounded-md font-medium">#mindfulness</span>
+                        <span
+                            class="bg-white/60 text-[#555D56] text-xs px-2.5 py-1 rounded-md font-medium">#design-ethics</span>
+                    </div>
+                </article>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+                    <article
+                        class="bg-[#F1EFE9] rounded-3xl overflow-hidden flex flex-col justify-between min-h-[220px]">
+                        <div class="h-28 bg-[#D4DDD6] relative flex items-center justify-center overflow-hidden">
+                            <span
+                                class="text-xs font-medium text-[#5A6E60] bg-white/80 px-2.5 py-1 rounded-full absolute bottom-3 left-4">Work</span>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h4 class="font-bold text-[#1A1D1A] mb-2">Office Redesign Notes</h4>
+                                <p class="text-xs text-[#555D56] line-clamp-2">Need to prioritize ergonomic comfort and
+                                    natural light diffusion...</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="bg-[#F1EFE9] rounded-3xl p-5 flex flex-col justify-between min-h-[220px]">
+                        <div>
+                            <div class="mb-4">
+                                <span
+                                    class="bg-[#E5E0D8] text-[#555D56] text-xs font-medium px-2.5 py-1 rounded-full">Personal</span>
+                            </div>
+                            <h4 class="font-bold text-[#1A1D1A] mb-3">Weekend Grocery List</h4>
+                            <ul class="space-y-2 text-xs font-medium text-[#555D56]">
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-[#92A898]"></span> Fresh ginger & mint
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-[#92A898]"></span> Organic honey
+                                </li>
+                            </ul>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+
+            <div class="space-y-6">
+
+                <article
+                    class="bg-white rounded-3xl p-6 border border-[#E5E0D8] relative flex flex-col justify-between min-h-[280px]">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="bg-[#EAECE8] text-[#555D56] text-xs font-medium px-2.5 py-1 rounded-full">Ideas</span>
+                            <span class="text-sm text-gray-400">📌</span>
+                        </div>
+                        <h3 class="font-bold text-[#1A1D1A] text-lg mb-4">Morning Ritual Ideas</h3>
+                        <ol class="space-y-3 text-xs md:text-sm text-[#555D56]">
+                            <li class="flex gap-2">
+                                <span class="text-[#8A928C] font-medium">1.</span> Cold water therapy
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="text-[#8A928C] font-medium">2.</span> 5 minutes of focused breathing
+                            </li>
+                            <li class="flex gap-2">
+                                <span class="text-[#8A928C] font-medium">3.</span> Tea ceremony without screens...
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="mt-6">
+                        <span
+                            class="bg-[#F1EFE9] text-[#555D56] text-xs px-2.5 py-1 rounded-md font-medium">#wellness</span>
+                    </div>
+                </article>
+
+                <article class="bg-[#F1EFE9] rounded-3xl p-6 flex flex-col justify-between min-h-[220px]">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="bg-[#E5E0D8] text-[#555D56] text-xs font-medium px-2.5 py-1 rounded-full">Work</span>
+                            <span class="text-xs text-[#8A928C]">Mar 12</span>
+                        </div>
+                        <h4 class="font-bold text-[#1A1D1A] text-base mb-2">Project Alpha Review</h4>
+                        <p class="text-xs md:text-sm text-[#555D56] leading-relaxed">
+                            The feedback from the initial user group was surprisingly positive regarding the soft-focus
+                            UI...
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const sidebar = document.getElementById('mobileSidebar');
+        const backdrop = document.getElementById('sidebarBackdrop');
+        const toggleButton = document.getElementById('sidebarToggle');
+        const closeButton = document.getElementById('sidebarClose');
+
+        function openSidebar() {
+            sidebar.classList.remove('-translate-x-full');
+            backdrop.classList.remove('hidden', 'opacity-0');
+            backdrop.classList.add('opacity-100');
+            document.body.classList.add('overflow-hidden');
+            toggleButton.setAttribute('aria-expanded', 'true');
+        }
+
+        function closeSidebar() {
+            sidebar.classList.add('-translate-x-full');
+            backdrop.classList.remove('opacity-100');
+            backdrop.classList.add('opacity-0');
+            document.body.classList.remove('overflow-hidden');
+            toggleButton.setAttribute('aria-expanded', 'false');
+            window.setTimeout(() => {
+                if (!backdrop.classList.contains('opacity-100')) {
+                    backdrop.classList.add('hidden');
+                }
+            }, 200);
+        }
+
+        toggleButton?.addEventListener('click', () => {
+            if (sidebar.classList.contains('-translate-x-full')) {
+                openSidebar();
+            } else {
+                closeSidebar();
+            }
+        });
+
+        closeButton?.addEventListener('click', closeSidebar);
+        backdrop?.addEventListener('click', closeSidebar);
+
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeSidebar();
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                backdrop.classList.add('hidden');
+                backdrop.classList.remove('opacity-100', 'opacity-0');
+                document.body.classList.remove('overflow-hidden');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
